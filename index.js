@@ -1,32 +1,45 @@
-//You need to replace with your username and password(MONGODB ATLAS)
-//Also you need to put your api key for fetching news in client folder
-var express = require('express')
-var cors = require('cors')
-var path = require('path');
-var bodyParser = require('body-parser')
-var app = express()
+const express = require("express");
+const mongoose = require("mongoose");
+const passport = require("passport");
+const cookieSession = require("cookie-session");
+const bodyParser = require("body-parser");
+const path = require('path')
 
+const app = express();
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+const auth = require("./routes/auth-routes");
 
-const mongoose = require('mongoose')
-var port = process.env.PORT || 5000
+require("./models/User.js");
 
-app.use(bodyParser.json())
-app.use(cors())
 app.use(
-  bodyParser.urlencoded({
-    extended: false
+  cookieSession({
+    maxAge: 30 * 24 * 60 * 60 * 1000,
+    keys: ["somesecretsauce"]
   })
-)
+);
+
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb+srv://vishal:qwerty12@merncluster-vfsb5.mongodb.net/test?retryWrites=true&w=majority";
-mongoose.connect(process.env.MONGODB_URI || 'mongodb+srv://vishal:qwerty12@merncluster-vfsb5.mongodb.net/test?retryWrites=true&w=majority',{
-    useNewUrlParser: true
-})
 
 
-var Users = require('./routes/User')
-app.use('/uploads',express.static('uploads'))
-app.use('/users', Users)
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
+mongoose.connect(process.env.MONGODB_URI || "mongodb+srv://vishal:qwerty12@merncluster-vfsb5.mongodb.net/test?retryWrites=true&w=majority");
+
+
+
+// Passport Middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Passport config
+require("./config/passport");
+
+
+require("./routes/auth-routes.js")(app);
+
+
+// Server static assets if in production
 if (process.env.NODE_ENV === "production") {
   // Set static folder
   app.use(express.static("client/build"));
@@ -36,10 +49,7 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
+const port = process.env.PORT || 5000;
 
+app.listen(port, () => console.log(`App running on port ${port}`));
 
-
-
-app.listen(port, function() {
-    console.log('Server is running on port: ' + port)
-})

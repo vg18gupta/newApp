@@ -1,2 +1,3 @@
 export const FETCH_WEATHER = 'FETCH_WEATHER';
 export const FETCH_GEODATA = 'FETCH_GEODATA';
+export const SET_CURRENT_USER = "SET_CURRENT_USER";

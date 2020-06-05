@@ -1,129 +1,93 @@
-import React, { Component } from 'react'
-import { Link, withRouter } from 'react-router-dom'
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 
-class Landing extends Component {
-    logOut(e) {
-      e.preventDefault()
-      localStorage.removeItem('usertoken')
-      this.props.history.push(`/`)
-    }
-  
-    render() {
-      const loginRegLink = (
-        <ul className="navbar-nav">
-          <li className="nav-item">
-            <Link to="/login" className="nav-link">
-              Login
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/register" className="nav-link">
-              Register
-            </Link>
-          </li>
-        </ul>
-      )
-  
-      const userLink = (
-        <ul className="navbar-nav">
-         
-        </ul>
-      )
-  
-      return (
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark rounded">
+class Navbar extends Component {
+  render() {
+    const { isAuthenticated, user } = this.props.auth;
+
+    const authLinks = (
+      <ul className="navbar-nav ml-auto">
+        <li className="nav-item">
+          <Link className="nav-link" to="/Headlines">
+            Headlines
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link" to="/Weather">
+            Weather
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link" to="/user">
+            Profile
+          </Link>
+        </li>
+        <li className="nav-item">
+          <a href="/api/logout" className="nav-link">
+            <img
+              className="rounded-circle"
+              src={user.photo}
+              alt={user.name}
+              style={{ width: "25px", marginRight: "5px" }}
+              title="You must have a Gravatar connected to your email to display an image"
+            />
+            Logout
+          </a>
+        </li>
+      </ul>
+    );
+
+    const guestLinks = (
+      <ul className="navbar-nav ml-auto">
+        {/*<li className="nav-item">
+          <a className="nav-link" href="/">
+            Login with Google
+          </a>
+        </li>
+         <li className="nav-item">
+          <Link className="nav-link" to="/login">
+            Login
+          </Link>
+    </li>*/}
+      </ul>
+    );
+
+    return (
+      <nav className="navbar navbar-expand-sm navbar-dark bg-dark mb-4" >
+        <div className="container">
+          {/* <Link className="navbar-brand" to="/">
+          <img src={icon_img}/>
+          </Link> */}
           <button
             className="navbar-toggler"
             type="button"
             data-toggle="collapse"
-            data-target="#navbarsExample10"
-            aria-controls="navbarsExample10"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
+            data-target="#mobile-nav"
           >
             <span className="navbar-toggler-icon" />
           </button>
-
-
-          {/* LEFT SIDE NAV ITEMS */}
-          <div
-            className="collapse navbar-collapse justify-content-md-left"
-            id="navbarsExample10"
-          >
-            <ul className="navbar-nav">
-              <li className="nav-item">
-                <Link to="/" className="nav-link">
-                  Home
-                </Link>
-              </li>
-              </ul>
-
-              {localStorage.usertoken &&
-              <ul className="navbar-nav">
-              <li className="nav-item">
-                <Link to="/profile" className="nav-link">
-                  Profile
-                </Link>
-              </li>
-
-
-            <li className="nav-item">
-              <Link to="/Headlines" className="nav-link">
-                Headlines
-              </Link>
-            </li>
-
-            <li className="nav-item">
-              <Link to="/Weather" className="nav-link">
-                Weather
-              </Link>
-            </li>
-            
-            </ul>
-            }
-
-            
-            
-            
-          </div>
+          {/* <div className="spacer" style={{flex: '1'}}></div> */}
           
-          
-          {/* RIGHT RIDE NAV ITEMS */}
-          <div
-            className="collapse navbar-collapse justify-content-md-end"
-            id="navbarsExample10"
-          >
-            {/* {localStorage.usertoken ? userLink : loginRegLink} */}
-            {!localStorage.usertoken && 
-              <ul className="navbar-nav">
-              <li className="nav-item">
-                <Link to="/login" className="nav-link">
-                  Login
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link to="/register" className="nav-link">
-                  Register
-                </Link>
-              </li>
-            </ul>
-            }
-            {localStorage.usertoken && 
-            <ul className="navbar-nav">
-               <li className="nav-item">
-                  <a href="" onClick={this.logOut.bind(this)} className="nav-link">
-                    Logout
-                  </a>
-              </li>
-            </ul>
-            }
+          <div className="collapse navbar-collapse" id="mobile-nav">
+            
+            {isAuthenticated ? authLinks : guestLinks}
           </div>
-        </nav>
-      )
-    }
+        </div>
+      </nav>
+    );
   }
-  
-  export default withRouter(Landing)
+}
+
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(
+  mapStateToProps,
+  {}
+)(Navbar);
+
 
 
 
