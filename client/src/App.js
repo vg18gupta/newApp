@@ -29,7 +29,7 @@ class App extends Component {
           <Route exact path="/" component={Landing} />
           <div className="container">
             <Route exact path="/user" component={Profile} />
-            <Route exact path="/Headlines" component={Headlines} />
+            <Route exact path="/Headline" component={Headlines} />
             <Route exact path="/Weather" component={Weatherdata} />
             <Route component={NoMatch} />
           </div>
