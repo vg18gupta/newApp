@@ -17,8 +17,8 @@ app.use(
     extended: false
   })
 )
-const MONGODB_URI = process.env.MONGODB_URI || "mongodb+srv://vishal:123@cluster0-j0yto.mongodb.net/test?retryWrites=true&w=majority";
-mongoose.connect(process.env.MONGODB_URI || 'mongodb+srv://vishal:123@cluster0-j0yto.mongodb.net/test?retryWrites=true&w=majority',{
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb+srv://vishal:qwerty12@merncluster-vfsb5.mongodb.net/test?retryWrites=true&w=majority";
+mongoose.connect(process.env.MONGODB_URI || 'mongodb+srv://vishal:qwerty12@merncluster-vfsb5.mongodb.net/test?retryWrites=true&w=majority',{
     useNewUrlParser: true
 })
 
