@@ -85,10 +85,6 @@ export default class HeadlinesComponent extends Component{
     
 
     componentDidMount() {
-        if(!localStorage.usertoken){
-            this.props.history.push(`/login`)
-            return
-        }
         console.log('https://gnews.io/api/v3/topics/'+this.state.topic+'?token='+process.env.REACT_APP_API_KEY+'&lang='+this.state.language)
         axios.get('https://gnews.io/api/v3/topics/'+this.state.topic+'?token='+process.env.REACT_APP_API_KEY+'&lang='+this.state.language)
             .then(response => {
