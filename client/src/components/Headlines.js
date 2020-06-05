@@ -22,7 +22,7 @@ const Todo = props => (
 )
 
 
-export default class Headlines extends Component{
+export default class HeadlinesComponent extends Component{
 
     constructor(props) {
         super(props);

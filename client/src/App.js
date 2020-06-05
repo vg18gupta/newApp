@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import store from './store'
-import Headlines from './components/Headlines';
+import HeadlinesComponent from './components/Headlines';
 import Weatherdata from './components/lat_long'
 import Navbar from './components/Navbar'
 import Landing from "./pages/landing";
@@ -29,7 +29,7 @@ class App extends Component {
           <Route exact path="/" component={Landing} />
           <div className="container">
             <Route exact path="/user" component={Profile} />
-            <Route exact path="/Headline" component={Headlines} />
+            <Route exact path="/Headline" component={HeadlinesComponent} />
             <Route exact path="/Weather" component={Weatherdata} />
             <Route component={NoMatch} />
           </div>
