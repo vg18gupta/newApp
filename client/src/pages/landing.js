@@ -17,9 +17,9 @@ class Landing extends React.Component {
           <div className="container">
             <div className="row">
               <div className="col-md-12 text-center">
-                <h1 className="display-3 mb-4">WikiBook</h1>
+                <h1 className="display-3 mb-4">News App</h1>
                 <p className="lead">
-                  Create an account and find you favorite books.
+                  Get Latest News Headlines.
                 </p>
                 <hr />
                 {isAuthenticated ? (
